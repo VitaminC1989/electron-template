@@ -12,6 +12,9 @@ module.exports = {
   ],
   rules: {
     'vue/require-default-prop': 'off',
-    'vue/multi-word-component-names': 'off'
+    'vue/multi-word-component-names': 'off',
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': 'off', // 添加此行用于 TypeScript
+    '@typescript-eslint/no-explicit-any': 'off' // 添加此行以允许使用 any 类型
   }
 }
