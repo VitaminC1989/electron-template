@@ -5,6 +5,7 @@ const ipcHandle = () => window.electron.ipcRenderer.send('ping')
 </script>
 
 <template>
+  <div class="drag-area"></div>
   <img alt="logo" class="logo" src="./assets/electron.svg" />
   <div class="creator">Powered by electron-vite</div>
   <div class="text">
@@ -24,3 +25,14 @@ const ipcHandle = () => window.electron.ipcRenderer.send('ping')
   </div>
   <Versions />
 </template>
+
+<style>
+.drag-area {
+  height: 30px;
+  width: 100%;
+  -webkit-app-region: drag;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+</style>
