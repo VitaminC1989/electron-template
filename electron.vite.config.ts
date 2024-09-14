@@ -8,9 +8,10 @@ export default defineConfig({
     plugins: [externalizeDepsPlugin()], // 使用 externalizeDepsPlugin 插件，将依赖外部化
     resolve: {
       alias: {
-        '@renderer': resolve('src/renderer/src'), // 定义路径别名
         '@config': resolve('src/config'),
         '@main': resolve('src/main'),
+        '@preload': resolve('src/preload'),
+        '@renderer': resolve('src/renderer/src'), // 定义路径别名
         '@components': resolve('src/renderer/src/components')
       }
     }
@@ -19,9 +20,10 @@ export default defineConfig({
   preload: {
     resolve: {
       alias: {
-        '@renderer': resolve('src/renderer/src'), // 定义路径别名
         '@config': resolve('src/config'),
         '@main': resolve('src/main'),
+        '@preload': resolve('src/preload'),
+        '@renderer': resolve('src/renderer/src'), // 定义路径别名
         '@components': resolve('src/renderer/src/components')
       }
     },
@@ -30,9 +32,10 @@ export default defineConfig({
   renderer: {
     resolve: {
       alias: {
-        '@renderer': resolve('src/renderer/src'), // 定义路径别名
         '@config': resolve('src/config'),
         '@main': resolve('src/main'),
+        '@preload': resolve('src/preload'),
+        '@renderer': resolve('src/renderer/src'), // 定义路径别名
         '@components': resolve('src/renderer/src/components')
       }
     },

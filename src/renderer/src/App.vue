@@ -1,7 +1,14 @@
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import Versions from './components/Versions.vue'
 
 const ipcHandle = () => window.electron.ipcRenderer.send('ping')
+
+onMounted(() => {
+  window.log.getLogFilePath().then((res) => {
+    console.log('<<< 日志文件路径 >>>', res)
+  })
+})
 </script>
 
 <template>

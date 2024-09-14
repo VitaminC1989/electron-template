@@ -1,6 +1,6 @@
 import { app } from 'electron'
 import windows from './windows/index'
-// import ipc from './ipc'
+import ipc from './ipc'
 import log from './logger'
 // 通讯管道名称枚举
 
@@ -12,7 +12,7 @@ import log from './logger'
 windows.main.init()
 windows.main.onWindowCreated(() => {
   // console.log('windows.main.onWindowCreated', windows.main.getWindow())
-  // ipc.init()
+  ipc.init()
 })
 
 // 注释掉悬浮窗口
