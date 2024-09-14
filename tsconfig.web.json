@@ -10,9 +10,18 @@
     "composite": true,
     "baseUrl": ".",
     "paths": {
+      "@config/*": [
+        "src/config/*"
+      ],
+      "@main/*": [
+        "src/main/*"
+      ],
+      "@preload/*": [
+        "src/preload/*"
+      ],
       "@renderer/*": [
         "src/renderer/src/*"
-      ]
+      ],
     }
   }
 }
