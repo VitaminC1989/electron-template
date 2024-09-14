@@ -14,7 +14,7 @@ import { EventEmitter } from 'events'
 import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer'
 
 // 配置文件
-import { windowSize } from '../../config/windows'
+import { windowSize } from '@config/windows'
 
 // 日志模块
 import log from '@main/logger'

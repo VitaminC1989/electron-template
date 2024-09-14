@@ -1,6 +1,6 @@
-import { resolve } from 'path'
-import { defineConfig, externalizeDepsPlugin } from 'electron-vite'
 import vue from '@vitejs/plugin-vue'
+import { defineConfig, externalizeDepsPlugin } from 'electron-vite'
+import { resolve } from 'path'
 
 export default defineConfig({
   // ---------------- 主进程配置 ----------------
@@ -36,6 +36,8 @@ export default defineConfig({
         '@components': resolve('src/renderer/src/components')
       }
     },
+    // 服务器配置
+    server: {},
     plugins: [vue()]
   }
 })
