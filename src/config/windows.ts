@@ -18,6 +18,6 @@ export const WIN_FOLD_SET = {
 }
 
 export const windowSize = {
-  width: 700,
-  height: 500
+  width: 1000,
+  height: 800
 }
