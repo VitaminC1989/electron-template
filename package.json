@@ -24,7 +24,8 @@
     "@electron-toolkit/preload": "^3.0.0",
     "@electron-toolkit/utils": "^3.0.0",
     "electron-log": "^4.4.8",
-    "electron-updater": "^6.1.7"
+    "electron-updater": "^6.1.7",
+    "vue-router": "^4.4.5"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config": "^1.0.2",

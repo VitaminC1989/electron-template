@@ -4,10 +4,13 @@ import Versions from './components/Versions.vue'
 
 const ipcHandle = () => window.electron.ipcRenderer.send('ping')
 
-onMounted(() => {
-  window.log.getLogFilePath().then((res) => {
-    console.log('<<< 日志文件路径 >>>', res)
-  })
+onMounted(async () => {
+  try {
+    const logFilePath = await window.log.getLogFilePath()
+    console.log('<<< 日志文件路径 >>>', logFilePath)
+  } catch (error) {
+    console.error('获取日志文件路径时出错:', error)
+  }
 })
 </script>
 
