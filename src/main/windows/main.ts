@@ -9,8 +9,6 @@ import path from 'path'
 import { EventEmitter } from 'events'
 
 // 开发工具扩展
-// import { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
-// import install from 'electron-devtools-installer'
 import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer'
 
 // 配置文件

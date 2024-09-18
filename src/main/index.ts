@@ -4,10 +4,6 @@ import ipc from './ipc'
 import log from './logger'
 // 通讯管道名称枚举
 
-// import './windows/recorder/index'
-// 初始化ipc
-// ipc.init()
-
 // 初始化主窗口
 windows.main.init()
 windows.main.onWindowCreated(() => {
