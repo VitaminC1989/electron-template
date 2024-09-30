@@ -11,6 +11,8 @@ export const MESSAGE_TYPE = {
   EXIT_APP: 'exit-app',
   // 获取设备MAC地址
   GET_DEVICE_MAC: 'get-device-mac',
+  // 获取主板序列号
+  GET_MOTHERBOARD_SERIAL_NUMBER: 'get-motherboard-serial-number',
   // 用默认浏览器打开网页
   OPEN_URL_IN_BROWSER: 'open-url-in-browser',
   // ---------------- 通用 end ----------------

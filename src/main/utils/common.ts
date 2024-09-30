@@ -1,5 +1,6 @@
 // 移除注册的handle事件
 import { ipcMain } from 'electron'
+import { execSync } from 'child_process'
 import * as os from 'os'
 
 export interface MacAddress {
@@ -54,14 +55,57 @@ export function getEthernetMacAddresses(): MacAddress[] {
 }
 
 /**
+ * 同步获取主板序列号
+ *
+ * 此函数会根据当前操作系统平台(Windows或macOS)获取主板序列号。
+ * 对于不支持的平台,会抛出错误。
+ *
+ * @returns {string} 返回主板序列号
+ * @throws {Error} 如果平台不支持或获取过程中出错,则抛出错误
+ *
+ * @example
+ * try {
+ *   const serialNumber = getMotherboardSerialNumberSync();
+ *   console.log('主板序列号:', serialNumber);
+ * } catch (error) {
+ *   console.error('获取主板序列号失败:', error.message);
+ * }
+ */
+export function getMotherboardSerialNumberSync(): string {
+  const platform: NodeJS.Platform = os.platform()
+
+  try {
+    if (platform === 'win32') {
+      // Windows 平台,使用 wmic 获取主板序列号
+      const stdout: string = execSync('wmic baseboard get SerialNumber').toString()
+      // 提取 SerialNumber,去除不必要的换行和空白
+      const result: string = stdout.split('\n')[1].trim()
+      return result
+    } else if (platform === 'darwin') {
+      // macOS 平台,使用 ioreg 获取主板序列号
+      const stdout: string = execSync('ioreg -l | grep IOPlatformSerialNumber').toString()
+      // 提取序列号
+      const result: string = stdout.split('"IOPlatformSerialNumber" = ')[1].replace(/"/g, '').trim()
+      return result
+    } else {
+      // 不支持的平台
+      throw new Error('当前平台不支持获取主板序列号')
+    }
+  } catch (error: unknown) {
+    throw new Error(`获取主板序列号时出错: ${(error as Error).message}`)
+  }
+}
+
+/**
  * 移除已注册的 IPC 处理程序
  *
- * @param {string[]} channelNames - 需要移除处理程序的 IPC 通道名称数组
+ * @param {ReadonlyArray<string>} channelNames - 需要移除处理程序的 IPC 通道名称数组
+ * @returns {void}
  * @example
  * removeExistingHandlers(['channel1', 'channel2']);
  */
-export function removeExistingHandlers(channelNames: string[]): void {
-  channelNames.forEach((channel: string) => {
+export function removeExistingHandlers(channelNames: ReadonlyArray<string>): void {
+  channelNames.forEach((channel: string): void => {
     ipcMain.removeHandler(channel)
   })
 }
