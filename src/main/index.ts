@@ -2,12 +2,11 @@ import { app } from 'electron'
 import windows from './windows/index'
 import ipc from './ipc'
 import log from './logger'
-// 通讯管道名称枚举
+
 
 // 初始化主窗口
 windows.main.init()
 windows.main.onWindowCreated(() => {
-  // console.log('windows.main.onWindowCreated', windows.main.getWindow())
   ipc.init()
 })
 

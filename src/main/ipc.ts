@@ -1,6 +1,10 @@
 import { app, ipcMain, shell } from 'electron'
-import { getEthernetMacAddresses, removeExistingHandlers } from '@main/utils/common'
+import { getMotherboardSerialNumberSync, removeExistingHandlers } from '@main/utils/common'
 
+// 持久化存储
+import * as store from './electronStore'
+
+// 日志
 import log from './logger'
 
 // 通讯管道名称枚举
@@ -11,8 +15,14 @@ function init() {
   // 移除已存在的事件处理器,避免重复注册导致错误
   removeExistingHandlers([
     MESSAGE_TYPE.GET_DEVICE_MAC,
+    MESSAGE_TYPE.GET_MOTHERBOARD_SERIAL_NUMBER,
     MESSAGE_TYPE.LOG_CHANGE_LEVEL,
-    MESSAGE_TYPE.LOG_GET_LOG_FILE_PATH
+    MESSAGE_TYPE.LOG_GET_LOG_FILE_PATH,
+    MESSAGE_TYPE.STORE_GET,
+    MESSAGE_TYPE.STORE_SET,
+    MESSAGE_TYPE.STORE_ONCE,
+    MESSAGE_TYPE.STORE_DELETE,
+    MESSAGE_TYPE.STORE_GET_ALL
   ])
 
   // 监听退出应用消息
@@ -21,9 +31,9 @@ function init() {
   })
 
   // ------------------ 通用功能 ------------------
-  // 获取设备MAC地址
-  ipcMain.handle(MESSAGE_TYPE.GET_DEVICE_MAC, () => {
-    return getEthernetMacAddresses()
+  // 获取主板序列号
+  ipcMain.handle(MESSAGE_TYPE.GET_MOTHERBOARD_SERIAL_NUMBER, () => {
+    return getMotherboardSerialNumberSync()
   })
 
   // 在默认浏览器中打开URL
@@ -67,6 +77,28 @@ function init() {
     log.silly(param, ...args)
   })
   // ------------------ 日志相关功能 end ------------------
+
+  // ------------------ 持久化存储 start ------------------
+  ipcMain.handle(MESSAGE_TYPE.STORE_GET, (_event, key) => {
+    return store.get(key)
+  })
+
+  ipcMain.handle(MESSAGE_TYPE.STORE_SET, async (_event, key, value, options) => {
+    store.set(key, value, options)
+  })
+  ipcMain.handle(MESSAGE_TYPE.STORE_ONCE, (_event, key, value) => {
+    store.once(key, value)
+  })
+
+  ipcMain.handle(MESSAGE_TYPE.STORE_DELETE, (_event, key) => {
+    store.remove(key)
+  })
+
+  // 返回所有存储数据
+  ipcMain.handle(MESSAGE_TYPE.STORE_GET_ALL, async () => {
+    return store.getAllStore()
+  })
+  // ------------------ 持久化存储 end ------------------
 }
 
 // 导出初始化函数
