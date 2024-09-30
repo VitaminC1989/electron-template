@@ -1,26 +1,3 @@
-<script setup lang="ts">
-// 引入 Vue 的响应式引用和生命周期钩子
-import { ref, onMounted } from 'vue'
-// 引入 Versions 组件
-import Versions from './components/Versions.vue'
-import Counter from './components/Counter.vue'
-
-// 定义一个处理 IPC 通信的函数，发送 'ping' 消息
-const ipcHandle = () => window.electron.ipcRenderer.send('ping')
-
-// 组件挂载后执行的逻辑
-onMounted(async () => {
-  try {
-    // 获取日志文件路径
-    const logFilePath = await window.log.getLogFilePath()
-    console.log('<<< 日志文件路径 >>>', logFilePath)
-  } catch (error) {
-    // 处理获取日志文件路径时的错误
-    console.error('获取日志文件路径时出错:', error)
-  }
-})
-</script>
-
 <template>
   <div class="app-container">
     <!-- 拖拽区域，用于窗口拖动 -->
@@ -38,6 +15,11 @@ onMounted(async () => {
     </div>
     <!-- 提示信息，指导用户打开开发者工具 -->
     <p class="tip">请尝试按 <code>F12</code> 打开开发者工具</p>
+
+    <!-- 持久化存储 electron-store demo -->
+    <div class="store">
+      <ElectronStoreDemo></ElectronStoreDemo>
+    </div>
 
     <div class="counter">
       <Counter></Counter>
@@ -59,6 +41,28 @@ onMounted(async () => {
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { onMounted } from 'vue'
+
+import Versions from './components/Versions.vue'
+import Counter from './components/Counter.vue'
+import ElectronStoreDemo from './components/ElectronStoreDemo.vue'
+
+// 将 ipcHandle 函数改为异步函数
+const ipcHandle = () => {
+  window.electron.ipcRenderer.send('ping')
+}
+
+onMounted(async () => {
+  try {
+    const logFilePath = await window.log.getLogFilePath()
+    console.log('<<< 日志文件路径 >>>', logFilePath)
+  } catch (error) {
+    console.error('获取日志文件路径时出错:', error)
+  }
+})
+</script>
 
 <style lang="less" scoped>
 .app-container {
