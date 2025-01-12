@@ -50,7 +50,8 @@ function createWindow(): void {
       preload: path.join(__dirname, '../preload/index.js'),
       sandbox: false,
       // 生产环境不能使用 devTools
-      devTools: !isProduction,
+      devTools: true,
+      // devTools: !isProduction,
       webviewTag: true // 启用 webview 支持
     }
   })
@@ -82,6 +83,7 @@ function createWindow(): void {
 
   // 根据环境加载不同的URL
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
+    console.log('ELECTRON_RENDERER_URL', process.env['ELECTRON_RENDERER_URL'])
     win.loadURL(process.env['ELECTRON_RENDERER_URL'])
   } else {
     win.loadFile(path.join(__dirname, '../renderer/index.html'))

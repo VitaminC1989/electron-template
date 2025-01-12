@@ -89,5 +89,14 @@ export const MESSAGE_TYPE = {
   START_RECORDER: 'startRecorderUpload',
   RESIZE_SIZE: 'resizeSize', // 重置窗口大小至底部
   MOVE_WINDOW: 'moveWindow', // 移动窗口'
-  RECOVERY_SIZE: 'recoverySize' // 恢复原生大小
+  RECOVERY_SIZE: 'recoverySize', // 恢复原生大小
+
+  // ---------------- 端侧模型 start ----------------
+  MODEL_RUN: 'model-run', // 模型运行
+  MODEL_DECODE_AUDIO_FILE: 'model-decode-audio-file', // 模型解码音频文件
+  MODEL_START_REAL_TIME_SPEECH_RECOGNITION: 'start-real-time-speech-recognition' // 开始实时语音识别
+  // ---------------- 端侧模型 end ----------------
+
+  // ---------------- 端侧模型 start ----------------
+  // ---------------- 端侧模型 end ----------------
 }

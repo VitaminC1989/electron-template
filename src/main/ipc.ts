@@ -7,6 +7,11 @@ import * as store from './electronStore'
 // 日志
 import log from './logger'
 
+// 端侧模型
+import model from '@renderer/object/model'
+// const run = require('../renderer/src/object/model.js')
+import { startRealTimeSpeechRecognition } from './ncnn/real-time-speech-recognition-microphone'
+import { decodeAudioFile } from './ncnn/decode-file.js'
 // 通讯管道名称枚举
 import { MESSAGE_TYPE } from '@config/communication'
 
@@ -22,7 +27,9 @@ function init() {
     MESSAGE_TYPE.STORE_SET,
     MESSAGE_TYPE.STORE_ONCE,
     MESSAGE_TYPE.STORE_DELETE,
-    MESSAGE_TYPE.STORE_GET_ALL
+    MESSAGE_TYPE.STORE_GET_ALL,
+    MESSAGE_TYPE.MODEL_RUN,
+    MESSAGE_TYPE.MODEL_START_REAL_TIME_SPEECH_RECOGNITION
   ])
 
   // 监听退出应用消息
@@ -40,6 +47,22 @@ function init() {
   ipcMain.on(MESSAGE_TYPE.OPEN_URL_IN_BROWSER, (_event, url) => {
     shell.openExternal(url)
   })
+
+  // ------------------ 端侧模型 start ------------------
+  ipcMain.handle(MESSAGE_TYPE.MODEL_RUN, (_event, text) => {
+    return model.run(text)
+  })
+
+  // 模型解码音频文件
+  ipcMain.handle(MESSAGE_TYPE.MODEL_DECODE_AUDIO_FILE, (_event, audio) => {
+    return decodeAudioFile(audio)
+  })
+
+  // 开始实时语音识别
+  ipcMain.handle(MESSAGE_TYPE.MODEL_START_REAL_TIME_SPEECH_RECOGNITION, () => {
+    startRealTimeSpeechRecognition()
+  })
+  // ------------------ 端侧模型 end ------------------
 
   // ------------------ 日志相关功能 start ------------------
   // 获取日志文件路径
